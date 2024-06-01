@@ -1,0 +1,22 @@
+spring:
+    application:
+        name: book-store-back2
+
+    datasource:
+        url: jdbc:postgresql://localhost:5432/bookstore5
+        username: postgres
+        password: 123
+
+    jpa:
+        database: postgresql
+        hibernate:
+            ddl-auto: none
+            show-sql: true
+        properties:
+            dialect: "org.hibernate.dialect.PostgreSQLDialect"
+            format_sql: true
+    liquibase:
+        enabled: true
+        change-log: "classpath:/liquibase/changelog-master.yaml"
+
+

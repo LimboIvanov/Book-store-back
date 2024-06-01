@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1679414984807-1" author="dmitrii.ivanov (generated)">
+        <createTable tableName="book">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genre" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="isbn" type="varchar(13)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="price" type="decimal(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="text"/>
+            <column name="image_url" type="varchar(512)"/>
+            <column name="rating" type="float8"/>
+            <column name="inventory_count" type="int4">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1679414984807-2" author="dmitrii.ivanov (generated)">
+        <createTable tableName="role">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1679414984807-3" author="dmitrii.ivanov (generated)">
+        <createTable tableName="users">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password_hash" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+            <column name="email" type="varchar(254)">
+                <constraints unique="true"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="users"
+                baseColumnNames="role_id"
+                constraintName="fk_user_role"
+                referencedTableName="role"
+                referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="1679414984807-4" author="dmitrii.ivanov (generated)">
+        <createTable tableName="review">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rating" type="int4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="comment" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="review"
+                baseColumnNames="book_id"
+                constraintName="fk_review_book"
+                referencedTableName="book"
+                referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                baseTableName="review"
+                baseColumnNames="user_id"
+                constraintName="fk_review_user"
+                referencedTableName="users"
+                referencedColumnNames="id"/>
+    </changeSet>
+    
+</databaseChangeLog>
