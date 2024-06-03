@@ -6,17 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -28,10 +22,29 @@ import java.util.List;
 @Slf4j
 public class BookSearchDto extends GenericSearchDto<Book> {
 
-    // Add any specific fields for filtering if needed
+//    // Add any specific fields for filtering if needed
+//    private String title;
+//    private String author;
+//    private String genre;
+//
+//    protected void addFiltersInternal(Root<Book> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
+//        if (title != null && !title.isEmpty()) {
+//            filters.add(criteriaBuilder.like(root.get("title"), "%" + title + "%"));
+//        }
+//        if (author != null && !author.isEmpty()) {
+//            filters.add(criteriaBuilder.like(root.get("author"), "%" + author + "%"));
+//        }
+//        if (genre != null && !genre.isEmpty()) {
+//            filters.add(criteriaBuilder.equal(root.get("genre"), genre));
+//        }
+//    }
+
     private String title;
     private String author;
     private String genre;
+    private BigDecimal minPrice;
+    private BigDecimal maxPrice;
+    private Double rating;
 
     protected void addFiltersInternal(Root<Book> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
         if (title != null && !title.isEmpty()) {
@@ -43,6 +56,16 @@ public class BookSearchDto extends GenericSearchDto<Book> {
         if (genre != null && !genre.isEmpty()) {
             filters.add(criteriaBuilder.equal(root.get("genre"), genre));
         }
+        if (minPrice != null) {
+            filters.add(criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice));
+        }
+        if (maxPrice != null) {
+            filters.add(criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice));
+        }
+        if (rating != null) {
+            filters.add(criteriaBuilder.equal(root.get("rating"), rating));
+        }
     }
+
 }
 

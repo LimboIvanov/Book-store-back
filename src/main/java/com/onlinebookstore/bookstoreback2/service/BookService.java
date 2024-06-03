@@ -16,10 +16,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -70,6 +68,16 @@ public class BookService {
         Page<Book> bookPage = repository.findAll(bookSearchDto.getSpecification(), bookSearchDto.getPageable());
         List<BookDto> bookDtos = mapper.toDtos(bookPage.getContent());
         return new PageImpl<>(bookDtos, bookSearchDto.getPageable(), bookPage.getTotalElements());
+    }
+
+    public List<BookDto> getBooksByPriceGreaterThan(BigDecimal price) {
+        List<Book> books = repository.findBooksByPriceGreaterThan(price);
+        return mapper.toDtos(books);
+    }
+
+    public List<BookDto> getBooksByPriceLessThan(BigDecimal price) {
+        List<Book> books = repository.findBooksByPriceLessThan(price);
+        return mapper.toDtos(books);
     }
 
 
