@@ -1,13 +1,13 @@
 package com.onlinebookstore.bookstoreback2.controller;
 
-import com.onlinebookstore.bookstoreback2.dto.BookDto;
 import com.onlinebookstore.bookstoreback2.dto.ReviewDto;
-import com.onlinebookstore.bookstoreback2.service.BookService;
 import com.onlinebookstore.bookstoreback2.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -18,7 +18,8 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @PostMapping(value = "/reviews")
-    public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto reviewDto) {
+    public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto reviewDto) throws Exception {
+        System.out.println("1111111111111" + "   " + reviewDto);
         return ResponseEntity.ok().body(reviewService.create(reviewDto));
     }
 
@@ -37,6 +38,16 @@ public class ReviewController {
     @PutMapping("/reviews")
     public ResponseEntity<ReviewDto> updateReview(@RequestBody ReviewDto reviewDto) throws Exception {
         return ResponseEntity.ok().body(reviewService.update(reviewDto));
+    }
+
+    @GetMapping(value = "/reviews")
+    public ResponseEntity<List<ReviewDto>> getAllReviews() {
+        return ResponseEntity.ok().body(reviewService.findAllReviews());
+    }
+
+    @GetMapping(value = "/reviews-by-book/{bookId}")
+    public ResponseEntity<List<ReviewDto>> getAllReviewsByBookId(@PathVariable Long bookId) {
+        return ResponseEntity.ok().body(reviewService.findAllReviewsByBookId(bookId));
     }
 
 }

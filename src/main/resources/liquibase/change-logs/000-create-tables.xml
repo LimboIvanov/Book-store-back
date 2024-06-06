@@ -104,5 +104,11 @@
                 referencedTableName="users"
                 referencedColumnNames="id"/>
     </changeSet>
-    
+
+    <changeSet id="1679414984807-7" author="dmitrii.ivanov (generated)">
+        <sql>
+            SELECT setval('review_id_seq', (SELECT MAX(id) FROM review) + 1);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

@@ -1,13 +1,9 @@
 package com.onlinebookstore.bookstoreback2.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.onlinebookstore.bookstoreback2.model.Book;
-import com.onlinebookstore.bookstoreback2.model.User;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -21,6 +17,7 @@ public class ReviewDto {
 
     private String comment;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     private LocalDateTime createdAt;
 
     private BookDto book;

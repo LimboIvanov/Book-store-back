@@ -5,17 +5,12 @@ import com.onlinebookstore.bookstoreback2.dto.search.BookSearchDto;
 import com.onlinebookstore.bookstoreback2.mapper.BookMapper;
 import com.onlinebookstore.bookstoreback2.model.Book;
 import com.onlinebookstore.bookstoreback2.repository.BookRepository;
-import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; //?
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -44,12 +39,12 @@ public class BookService {
         return mapper.toDtos(books);
     }
 
-    public List<BookDto> findAllBooks(BookSearchDto searchDto) {
-        Specification<Book> spec = searchDto.getSpecification();
-        Pageable pageable = searchDto.getPageable();
-        Page<Book> booksPage = repository.findAll(spec, pageable);
-        return mapper.toDtos(booksPage.getContent());
-    }
+//    public List<BookDto> findAllBooks(BookSearchDto searchDto) {
+//        Specification<Book> spec = searchDto.getSpecification();
+//        Pageable pageable = searchDto.getPageable();
+//        Page<Book> booksPage = repository.findAll(spec, pageable);
+//        return mapper.toDtos(booksPage.getContent());
+//    }
 
     public void delete(Long id) {
         repository.deleteById(id);

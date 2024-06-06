@@ -21,30 +21,13 @@ import java.util.List;
 @ToString
 @Slf4j
 public class BookSearchDto extends GenericSearchDto<Book> {
-
-//    // Add any specific fields for filtering if needed
-//    private String title;
-//    private String author;
-//    private String genre;
-//
-//    protected void addFiltersInternal(Root<Book> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
-//        if (title != null && !title.isEmpty()) {
-//            filters.add(criteriaBuilder.like(root.get("title"), "%" + title + "%"));
-//        }
-//        if (author != null && !author.isEmpty()) {
-//            filters.add(criteriaBuilder.like(root.get("author"), "%" + author + "%"));
-//        }
-//        if (genre != null && !genre.isEmpty()) {
-//            filters.add(criteriaBuilder.equal(root.get("genre"), genre));
-//        }
-//    }
-
     private String title;
     private String author;
     private String genre;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private Double rating;
+    private BigDecimal price;
 
     protected void addFiltersInternal(Root<Book> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder, List<Predicate> filters) {
         if (title != null && !title.isEmpty()) {
@@ -65,7 +48,10 @@ public class BookSearchDto extends GenericSearchDto<Book> {
         if (rating != null) {
             filters.add(criteriaBuilder.equal(root.get("rating"), rating));
         }
-    }
 
+        if (price != null) {
+            filters.add(criteriaBuilder.equal(root.get("price"), price));
+        }
+    }
 }
 

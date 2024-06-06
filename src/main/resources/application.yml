@@ -3,7 +3,7 @@ spring:
         name: book-store-back2
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/bookstore5
+        url: jdbc:postgresql://localhost:5432/bookstore6
         username: postgres
         password: 123
 
