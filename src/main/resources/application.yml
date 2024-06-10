@@ -1,9 +1,11 @@
 spring:
+    main:
+        allow-circular-references: true
     application:
         name: book-store-back2
 
     datasource:
-        url: jdbc:postgresql://localhost:5432/bookstore6
+        url: jdbc:postgresql://localhost:5432/bookstore8
         username: postgres
         password: 123
 

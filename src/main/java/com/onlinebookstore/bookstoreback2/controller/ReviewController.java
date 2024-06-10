@@ -19,7 +19,6 @@ public class ReviewController {
 
     @PostMapping(value = "/reviews")
     public ResponseEntity<ReviewDto> createReview(@RequestBody ReviewDto reviewDto) throws Exception {
-        System.out.println("1111111111111" + "   " + reviewDto);
         return ResponseEntity.ok().body(reviewService.create(reviewDto));
     }
 

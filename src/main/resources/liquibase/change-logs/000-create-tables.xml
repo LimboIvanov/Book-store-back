@@ -107,7 +107,89 @@
 
     <changeSet id="1679414984807-7" author="dmitrii.ivanov (generated)">
         <sql>
-            SELECT setval('review_id_seq', (SELECT MAX(id) FROM review) + 1);
+            SELECT setval('review_id_seq', 100, false);
+        </sql>
+    </changeSet>
+
+
+    <!-- Create orders table -->
+    <changeSet id="1679414984807-8" author="dmitrii.ivanov (generated)">
+        <createTable tableName="orders">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="total_price" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="orders"
+                baseColumnNames="created_by"
+                constraintName="fk_order_created_by"
+                referencedTableName="users"
+                referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Create order_item table -->
+    <changeSet id="1679414984807-9" author="dmitrii.ivanov (generated)">
+        <createTable tableName="order_item">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="book_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="order_item"
+                baseColumnNames="book_id"
+                constraintName="fk_order_item_book"
+                referencedTableName="book"
+                referencedColumnNames="id"/>
+        <addForeignKeyConstraint
+                baseTableName="order_item"
+                baseColumnNames="order_id"
+                constraintName="fk_order_item_order"
+                referencedTableName="orders"
+                referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="1679414984807-10" author="dmitrii.ivanov (generated)">
+        <sql>
+            SELECT setval('order_item_id_seq', 100, false);
+        </sql>
+    </changeSet>
+
+    <changeSet id="1679414984807-11" author="dmitrii.ivanov (generated)">
+        <sql>
+            SELECT setval('orders_id_seq', 100, false);
+        </sql>
+    </changeSet>
+
+    <changeSet id="1679414984807-12" author="dmitrii.ivanov (generated)">
+        <sql>
+            SELECT setval('book_id_seq', 100, false);
+        </sql>
+    </changeSet>
+
+    <changeSet id="1679414984807-13" author="dmitrii.ivanov (generated)">
+        <sql>
+            SELECT setval('users_id_seq', (SELECT MAX(id) FROM users) + 1);
         </sql>
     </changeSet>
 
