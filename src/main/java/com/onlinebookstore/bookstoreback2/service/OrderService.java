@@ -1,5 +1,6 @@
 package com.onlinebookstore.bookstoreback2.service;
 
+import com.onlinebookstore.bookstoreback2.config.security.AuthenticationService;
 import com.onlinebookstore.bookstoreback2.dto.OrderDto;
 import com.onlinebookstore.bookstoreback2.dto.OrderItemDto;
 import com.onlinebookstore.bookstoreback2.mapper.OrderItemMapper;
@@ -25,11 +26,11 @@ public class OrderService {
     private final OrderMapper mapper;
     private final OrderItemMapper orderItemMapper;
     private final OrderItemRepository orderItemRepository;
+    private final AuthenticationService authenticationService;
 
     public OrderDto create(OrderDto orderDto) {
-        System.out.println(orderDto + "   OrderDTO11");
         Order order = mapper.toEntity(orderDto);
-        System.out.println(order + "   ORDER222");
+        order.setCreatedBy(authenticationService.getCurrentUserAsEntity());
         return mapper.toDto(repository.save(order));
     }
 

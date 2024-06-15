@@ -1,5 +1,6 @@
 package com.onlinebookstore.bookstoreback2.service;
 
+import com.onlinebookstore.bookstoreback2.config.security.AuthenticationService;
 import com.onlinebookstore.bookstoreback2.dto.ReviewDto;
 import com.onlinebookstore.bookstoreback2.mapper.ReviewMapper;
 import com.onlinebookstore.bookstoreback2.model.Review;
@@ -19,13 +20,11 @@ public class ReviewService {
 
     private final ReviewRepository repository;
     private final ReviewMapper mapper;
+    private final AuthenticationService authenticationService;
 
     public ReviewDto create(ReviewDto reviewDto) {
-        System.out.println(reviewDto);
-//        System.out.println(reviewDto.getBook());
         Review review = mapper.toEntity(reviewDto);
-        System.out.println("FIRST 1111111");
-        System.out.println(review.getBook());
+        review.setCreatedBy(authenticationService.getCurrentUserAsEntity());
         return mapper.toDto(repository.save(review));
     }
 
