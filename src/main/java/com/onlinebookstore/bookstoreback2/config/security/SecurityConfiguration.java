@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 //        return source;
 //    }
 
-        @Bean
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -67,7 +67,7 @@ public class SecurityConfiguration {
         };
     }
 
-        @Bean
+    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
@@ -78,12 +78,6 @@ public class SecurityConfiguration {
                         .anyRequest()
                         .authenticated()
                 );
-//                .authenticationProvider(authenticationProvider)
-//                .addFilterBefore(
-//                        jwtAuthFilter,
-//                        UsernamePasswordAuthenticationFilter.class
-//                );
-
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
