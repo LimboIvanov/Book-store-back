@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class ReviewService {
     public ReviewDto create(ReviewDto reviewDto) {
         Review review = mapper.toEntity(reviewDto);
         review.setCreatedBy(authenticationService.getCurrentUserAsEntity());
+        review.setCreatedAt(LocalDateTime.now());
         return mapper.toDto(repository.save(review));
     }
 
