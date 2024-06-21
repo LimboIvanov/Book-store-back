@@ -13,7 +13,7 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) throws Exception {
         System.out.println("REQUEST111  " + request);
         return ResponseEntity.ok(service.register(request));
     }

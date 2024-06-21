@@ -3,6 +3,7 @@ package com.onlinebookstore.bookstoreback2.config.security;
 import com.onlinebookstore.bookstoreback2.dto.UserDto;
 import com.onlinebookstore.bookstoreback2.mapper.UserMapper;
 import com.onlinebookstore.bookstoreback2.model.User;
+import com.onlinebookstore.bookstoreback2.repository.RoleRepository;
 import com.onlinebookstore.bookstoreback2.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,15 +22,17 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final UserMapper userMapper;
+    private final RoleRepository roleRepository;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) throws Exception {
         var user = User.builder()
                 .firstName(request.getFirstname())
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .username(request.getUsername())
-                .role(request.getRole())
+//                .role(request.getRole())
+                .role(roleRepository.findById(1L).orElseThrow(() -> new Exception("Role not found")))
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
